@@ -1,0 +1,155 @@
+<html>
+	<head>
+		<!-- add encoding reader -->
+		<meta charset="utf-8" />
+		<!-- add name as author -->
+		<meta name="author" content="[enter name here]" />
+		<meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+		<meta http-equiv="Content-Security-Policy" content="">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<!--HERE map api -->
+		<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" charset="utf-8"></script>
+		<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" charset="utf-8"></script>
+		<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+		<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+		<!-- add styling to order nav elements-->
+		<style>
+			#order_nav { margin: 0px 12px 15px 0px;}
+			button, input { height: 23px; width: 100px; }
+		</style>
+		
+		<title>MegaMax Sale</title>
+	</head>
+
+	<body>
+		<!-- implement a responsive page layout -->
+		<div class="page_container" style="max-width: 500px; margin: auto; font-size: 81%;">
+			<!-- center and upcase heading to create a look and feel of an app -->
+			<center>
+				<h1 style="text-transform: uppercase;">Widget Sale</h1>
+			</center>
+			<!-- class as main app container -->
+			<main class="app" style="margin-top: -12px;">
+				<!-- TODO I. User Information -->
+				<!-- add a section for user info -->
+				<section class="user_info">
+					<!-- add a from requiring OUCU and Password as user info  -->
+					<form id="begin_order" name="begin_order">
+						<!-- add a field area -->
+						<!-- center contents within field -->
+						<fieldset style="border:1px solid black; display: block; margin: 1.0em auto; text-align: center;">
+							<!-- center and upcase heading to create a look and feel of an app -->
+							<legend id="user_info" style="text-transform: uppercase;" align="center"><b>Enter Details
+									first!</b></legend>
+							<div>
+								<p style="display: inline-block;  align-items:center;">
+									<!-- add oucu input area -->
+									<!-- add placeholder as label -->
+									<input type="text" name="oucu" id="oucu" size="10" placeholder="User ID" required>
+									<!-- add password input area -->
+									<!-- add placeholder as label -->
+									<!-- limit input box size and add space between previous -->
+									<input type="password" name="password" id="password" size="10" placeholder="Password"
+										style="margin-left: 4px;" required>
+									<!-- add client input area -->
+									<!-- add placeholder as label -->
+									<!-- limit input box size and add space between previous -->
+									<!-- restrict input type to integer -->
+									<input type="number" step="1" name="client" id="client" size="10"
+										placeholder="Client ID" style="margin-left: 4px;" required>
+								</p>
+							</div>
+							<!-- add a begin order button -->
+							<div id="begin_order-button" align="center">
+								<button type="button" form="begin_order" onclick="controller.begin_order()">Begin Order</button>
+							</div>
+						</fieldset>
+					</form>
+				</section>
+				<div id="order_area">
+					<!-- TODO II. Widget navigation buttons -->
+					<!-- add a section for navigation area -->
+					<section id="widget_nav">
+						<!-- center the content and keep then on the same line -->
+						<div style="display: inline-block;  align-items:center;">
+							<!-- add  a button to call previous widget JS function -->
+							<button id="widget_nav" type="button" style="margin-left: 4px;"
+								onclick="controller.prev_widget()">Prev Widget</button>
+							<!-- add  a button to call next widget JS function -->
+							<button id="widget_nav" type="button" style="margin-left: 4px;"
+								onclick="controller.next_widget()">Next Widget</button>
+							<!-- add number input area -->
+							<!-- add placeholder as label -->
+							<!-- restrict input to integer -->
+							<input type="number" step="1" style="margin-left: 4px;" name="number" id="number"
+								placeholder="number" size="8">
+						</div>
+					</section>
+					<!-- add a line break to create a space between sections -->
+					<br>
+					<!-- TODO III. Widget display-->
+					<!-- add section for a widget image on the side on the main content -->
+					<aside align="left" style="margin-left: -32px;">
+						<figure style="display: inline-block;">
+							<!-- use cordova default icon as placeholder -->
+							<img id="widget_image" src="img/logo.png" style="max-width:120px; max-height:110px"
+								alt="image of a MegaMax widget" />
+							<figcaption id="widget_caption" style="margin-top: -135px; max-width:100%; max-height:5px">A temp image for MegaMax widgets @ £0.00
+							</figcaption>
+						</figure>
+					</aside>
+					<!-- TODO IV. Order navigation buttons and display -->
+					<!-- add section for order buttons and order details display-->
+					<section>
+						<!-- use aside element to align right -->
+						<aside align="right" style="display: block; margin-top: -5px;">
+							<div>
+								<!-- add agreed price input area -->
+								<!-- add placeholder as label -->
+								<!-- add agreed price input -->
+								<!-- restrict input to float -->
+								<input id="order_nav" type="number" step="0.01" name="agreed_price" class="agreed_price"
+									placeholder="Agreed Price">
+								<br>
+								<!-- add  a button to call add to order JS function -->
+								<button id="order_nav" type="button" onclick="controller.add_to_order()">Add to
+									Order</button>
+								<br>
+								<!-- add  a button to call end order JS function -->
+								<button id="order_nav" type="button" onclick="controller.end_order()">End Order</button>
+							</div>
+						</aside>
+						<div style="display: inline-block;  width: 100%; max-width: none;">
+							<!-- add a field area that will display order details -->
+							<!-- allow content to scroll within  order details field -->
+							<fieldset
+								style="border:1px solid black; height: 110px; overflow-y: scroll; margin-top: -5px; word-break: break-all;">
+								<!-- center and upcase heading to create a look and feel of an app -->
+								<legend id="order_details" style="text-transform: uppercase; " align="center"><b>Order Details</b></legend>
+								<!-- add order detail elements that JavaScript functions can populate and append to -->
+								<div id="client_orders"  style=" margin-top: -10px; height: auto;font-size: 98%;">								
+									<p id="order_description"  align="left"></p>
+									<p id="subtotal"  style="margin-top: 10px;" align="right"></p>
+									<p id="vat"  align="right"></p>
+									<p id="total"  align="right"></p>
+									<p id="client_details" style="margin-top: 10px;" align="left"></p>
+								</div>
+							</fieldset>
+						</div>
+					</section>
+					<!-- TODO V. Map canvas -->
+					<div id="mapContainer" style=" margin-top: 5px; height: 28%; width: 100%; max-width: none;"></div>
+				</div>
+				<!-- call js functions -->
+				<script type="text/javascript" src="cordova.js"></script>
+				<script type="text/javascript" src="js/index.js"></script>
+				<!-- add helper JS functions to make use of existing code-->
+				<script type="text/javascript" src="js/helpers.js"></script>
+			</main>
+		</div>
+	</body>
+</html>
